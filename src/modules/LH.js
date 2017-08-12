@@ -15,8 +15,9 @@ class LH {
         this.features.set(feature, id)
     }
 
-    isEnabled(){
-
+    isEnabled(feature){
+        if(typeof feature !== "string") throw new Error("Value must be string.")
+        return this.features.get(feature) !== undefined
     }
 
     getEnabledIDs(){

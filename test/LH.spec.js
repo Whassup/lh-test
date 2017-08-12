@@ -38,7 +38,6 @@ describe("LH Unit Tests", () => {
         expect(function(){ LH.push('feature3', 1) }).toThrow( e )
         expect(function(){ LH.push('feature4', true) }).toThrow( e )
         expect(function(){ LH.push('feature5', {}) }).toThrow( e )
-        console.log(LH)
     })
 
     it("LH.push() should allow only unique feature names", () => {
@@ -49,7 +48,7 @@ describe("LH Unit Tests", () => {
 
     //LH.isEnabled()
     it("LH.isEnabled() should return boolean.", () => {
-        expect(typeof LH.isEnabled()).toBe('boolean')
+        expect(typeof LH.isEnabled('feature1')).toBe('boolean')
         LH.push('feature1', 'A') 
         LH.push('feature2')
         expect(typeof LH.isEnabled('feature1')).toBe('boolean') 
