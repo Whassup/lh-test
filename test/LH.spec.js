@@ -1,6 +1,10 @@
 import LH from '../src/modules/LH'
 
 describe("LH Unit Tests", () => {
+    beforeEach(()=> {
+        LH.reset()//State of LH should be reset for every test
+    })
+
     //LH
     it("LH is defined", () => {
         expect( LH ).toBeDefined()
@@ -14,29 +18,33 @@ describe("LH Unit Tests", () => {
 
     //LH.push
     it("LH.push() should return undefined.", () => {
-        expect( LH.push()).toBeUndefined()
-        expect( LH.push('featureWithID', A) ).toBeUndefined()
+        expect( LH.push('featureWithID', 'A') ).toBeUndefined()
         expect( LH.push('featureWithNoID') ).toBeUndefined()
     })
 
     it("LH.push() should allow only for string to be provided for feature name", () => {
-        expect( LH.push('feature') ).not.toThrowError( new Error("Value must be string") )
-        expect( LH.push(1) ).toThrowError( new Error("Value must be string") )
-        expect( LH.push(true) ).toThrowError( new Error("Value must be string") )
-        expect( LH.push({}) ).toThrowError( new Error("Value must be string") )
+        let e = new Error("Value must be string.");
+        expect( function(){ LH.push('feature') }).not.toThrow( e )
+        expect(function(){ LH.push(1) }).toThrow( e )
+        expect(function(){  LH.push(true) }).toThrow( e )
+        expect(function(){ LH.push({}) }).toThrow( e )
+        
     })
 
     it("LH.push() should allow only for alpha characters A-Z that are upper case only to be provided for feature id", () => {
-        expect( LH.push('feature1', 'A') ).not.toThrowError( new Error("Value must be character between A-Z and uppercase.") )
-        expect( LH.push('feature2', 'a') ).toThrowError( new Error("Value must be character between A-Z and uppercase.") )
-        expect( LH.push('feature3', 1) ).toThrowError( new Error("Value must be character between A-Z and uppercase.") )
-        expect( LH.push('feature4', true) ).toThrowError( new Error("Value must be character between A-Z and uppercase.") )
-        expect( LH.push('feature5', {}) ).toThrowError( new Error("Value must be character between A-Z and uppercase.") )
+        let e = new Error("Value must be character between A-Z and uppercase.")
+        expect(function(){ LH.push('feature1', 'A') }).not.toThrow( e )
+        expect(function(){ LH.push('feature2', 'a') }).toThrow( e )
+        expect(function(){ LH.push('feature3', 1) }).toThrow( e )
+        expect(function(){ LH.push('feature4', true) }).toThrow( e )
+        expect(function(){ LH.push('feature5', {}) }).toThrow( e )
+        console.log(LH)
     })
 
     it("LH.push() should allow only unique feature names", () => {
-        expect( LH.push('feature1', 'A') ).not.toThrowError( new Error("Feature already added, unique feature name required.") )
-        expect( LH.push('feature1', 'B') ).toThrowError( new Error("Feature already added, unique feature name required.") )
+        let e = new Error("Feature already added, unique feature name required.")
+        expect(function(){ LH.push('feature1', 'A') }).not.toThrow( e )
+        expect(function(){ LH.push('feature1', 'B') }).toThrow( e )
     })
 
     //LH.isEnabled()
@@ -49,10 +57,11 @@ describe("LH Unit Tests", () => {
     })
 
     it("LH.isEnabled() should allow only for string to be provided for feature name", () => {
-        expect( LH.isEnabled('feature') ).not.toThrowError( new Error("Value must be string") )
-        expect( LH.isEnabled(1) ).toThrowError( new Error("Value must be string") )
-        expect( LH.isEnabled(true) ).toThrowError( new Error("Value must be string") )
-        expect( LH.isEnabled({}) ).toThrowError( new Error("Value must be string") )
+        let e = new Error("Value must be string.")
+        expect(function(){ LH.isEnabled('feature') }).not.toThrow( e )
+        expect(function(){ LH.isEnabled(1) }).toThrow( e )
+        expect(function(){ LH.isEnabled(true) }).toThrow( e )
+        expect(function(){ LH.isEnabled({}) }).toThrow( e )
     })
 
     it("LH.isEnabled() should return true when a feature is enabled.", () => {
