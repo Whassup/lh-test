@@ -21,7 +21,7 @@ class LH {
     }
 
     getEnabledIDs(){
-
+        return Array.from(this.features.values()).join('')
     }
 
     //Destroys the current instance of singleton and creates a new one.
